@@ -1,13 +1,11 @@
 package EmployeeService.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
 @Entity
+@Table(name = "employee")
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,4 +14,9 @@ public class Employee {
     private String lastName;
     private String email;
     private String phone;
+
+    // Implementing With a Foreign Key in JPA
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "employeeDetails_id", referencedColumnName = "id")
+    private EmployeeDetails details;
 }

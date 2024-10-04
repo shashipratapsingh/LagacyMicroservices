@@ -1,9 +1,13 @@
 package EmployeeService.controller;
 
 import EmployeeService.model.Employee;
+import EmployeeService.model.Project;
 import EmployeeService.service.EmployeeService;
+import EmployeeService.service.ProjectService;
 import EmployeeService.utility.ApiResponse;
+import EmployeeService.utility.GlobalExceptionHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +17,8 @@ import org.springframework.web.bind.annotation.*;
 public class EmployeeController {
     @Autowired
     private  EmployeeService employeeService;
-
+    @Autowired
+    private ProjectService projectService;
     @PostMapping("/")
     public ResponseEntity saveEmp(@RequestBody Employee emp){
         try {
@@ -34,4 +39,12 @@ public class EmployeeController {
 
        return new ResponseEntity<>(this.employeeService.getEmp(id),HttpStatus.OK);
     }
+
+    @PostMapping("/projects")
+    public ResponseEntity<Project> createProject(@RequestBody Project project) {
+        Project savedProject = projectService.createProject(project);
+        return new ResponseEntity<>(savedProject, HttpStatus.CREATED);
+    }
+
+
 }
